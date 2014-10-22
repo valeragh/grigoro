@@ -1,5 +1,25 @@
 Rails.application.routes.draw do
+  devise_for :users, :path => '', :path_names => { :sign_in => 'login', :sign_out => 'logout' }
+
+  authenticated :user do
+    root to: 'home#index', as: :authenticated_root
+  end
+
+  root to: 'welcome#index'
+
   resources :users
+
+  devise_scope :user do
+    # get   'login',          to: 'devise/sessions#new'
+    # get   'users/login',    to: 'devise/sessions#new'
+    get   'logout',         to: 'devise/sessions#destroy'
+    # get   'signup',         to: 'devise/registrations#new'
+    # get   'password',       to: 'devise/passwords#new'
+    # match 'users/secret',   to: "devise/passwords#create",      via: :post
+    # match 'sessions/user',  to: 'devise/sessions#create',       via: :post
+    # match 'users/signup',   to: 'devise/registrations#create',  via: :post
+    # match 'users/signup',   to: 'devise/registrations#create',  via: :post
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
