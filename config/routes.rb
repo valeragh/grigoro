@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   root to: 'welcome#index'
 
+  ActiveAdmin.routes(self)
+
   resources :users
 
   # devise_scope :user do
