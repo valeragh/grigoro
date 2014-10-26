@@ -1,10 +1,19 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  # :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, 
+         :validatable, :omniauthable, :omniauth_providers => [:vkontakte]
 
   def is_admin?
     self.role == 'admin'
+  end
+
+  def self.find_for_vkontakte_oauth auth_hash
+    where(provider: auth_hash.provider, uid: auth_hash.uid).first_or_create do |user|
+      user.email = auth_hash.uid + '@vk.com'
+      user.password = Devise.friendly_token[0,20]
+      user.name = auth_hash.info.name
+    end
   end
 end

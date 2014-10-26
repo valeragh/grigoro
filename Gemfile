@@ -15,6 +15,8 @@ gem 'jbuilder', '1.0.2'
 gem 'devise', '3.4.0'
 gem 'activeadmin', github: 'activeadmin'
 gem 'cancancan', '1.9.2'
+gem 'omniauth', '1.2.2'
+gem 'omniauth-vkontakte', '1.3.3'
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false

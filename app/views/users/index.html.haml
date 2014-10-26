@@ -4,6 +4,7 @@
   %tr
     %th Name
     %th Email
+    %th Provider
     %th
     %th
     %th
@@ -12,12 +13,11 @@
     %tr
       %td= user.name
       %td= user.email
+      %td= user.provider
       %td= link_to 'Show', user
-      - if can? [:update, :destroy], @user
+      - if can? :update, @user
         %td= link_to 'Edit', edit_user_path(user)
+      - if can? :destroy, @user
         %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
 - if can? :create, @user
-  = link_to 'New User', new_user_path
+  %br= link_to 'New User', new_user_path
