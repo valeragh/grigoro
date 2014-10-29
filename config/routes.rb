@@ -6,11 +6,7 @@ Rails.application.routes.draw do
                            :sign_out => 'logout',
                            :sign_up => 'signup' }
 
-  authenticated :user do
-    root to: 'home#index', as: :authenticated_root
-  end
-
-  root to: 'welcome#index'
+  root to: 'home#index'
 
   ActiveAdmin.routes(self)
 
