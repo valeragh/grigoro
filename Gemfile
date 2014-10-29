@@ -16,6 +16,7 @@ gem 'devise', '3.4.0'
 gem 'activeadmin', github: 'activeadmin'
 gem 'cancancan', '1.9.2'
 gem 'omniauth', '1.2.2'
+gem 'omniauth-facebook', '2.0.0'
 gem 'omniauth-vkontakte', '1.3.3'
 
 group :doc do

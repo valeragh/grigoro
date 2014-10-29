@@ -44,6 +44,7 @@ Devise.setup do |config|
   config.case_insensitive_keys = [ :email ]
 
   # OmniAuth
+  config.omniauth :facebook, '1502084826715764', '2842ae0cb95eaef847cf4fed86702d3d'
   config.omniauth :vkontakte, '3727580', 'YsjYopBtr1kj28ZnfOPk'
 
   # Configure which authentication keys should have whitespace stripped.
