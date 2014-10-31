@@ -1,4 +1,29 @@
 Rails.application.routes.draw do
+  devise_for :users,
+             controllers: { :omniauth_callbacks => 'users/omniauth_callbacks' },
+             path: '', 
+             path_names: { :sign_in => 'login',
+                           :sign_out => 'logout',
+                           :sign_up => 'signup' }
+
+  root to: 'home#index'
+
+  ActiveAdmin.routes(self)
+
+  resources :users
+
+  # devise_scope :user do
+    # get   'login',          to: 'devise/sessions#new'
+    # get   'users/login',    to: 'devise/sessions#new'
+    # get   'logout',         to: 'devise/sessions#destroy'
+    # get   'signup',         to: 'devise/registrations#new'
+    # get   'password',       to: 'devise/passwords#new'
+    # match 'users/secret',   to: "devise/passwords#create",      via: :post
+    # match 'sessions/user',  to: 'devise/sessions#create',       via: :post
+    # match 'users/signup',   to: 'devise/registrations#create',  via: :post
+    # match 'users/signup',   to: 'devise/registrations#create',  via: :post
+  # end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
