@@ -1,3 +1,35 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.navbar-default {
+  background-color: #198EFF;
+  border-color: #198EFF;
+}
+.navbar-default .navbar-nav > li > a{
+  color:#fff;
+}
+a, a:link, a:visited{
+  text-decoration: none;
+  text-transform: uppercase;
+}
+h1,h2{
+  color:#0D477F;
+  text-align: center;
+}
+.col-sm-10{
+  margin-bottom: 10px;
+}
+ul.unstyled, ol.unstyled, ul.inline, ol.inline{
+  list-style:none;
+}
+ul.inline>li, ol.inline>li{
+  display: inline-block;
+}
+.form-group a{
+  text-transform: none;
+  padding-left: 15px;
+}
+.navbar-default a.navbar-brand{
+  text-transform: none;
+  color:#fff;
+}
