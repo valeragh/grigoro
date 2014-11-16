@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :containers
+  has_many :templates
   
   # Include default devise modules. Others available are:
   # :confirmable, :lockable and :timeoutable

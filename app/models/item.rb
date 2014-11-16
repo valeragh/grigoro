@@ -1,3 +1,3 @@
 class Item < ActiveRecord::Base
-  belongs_to :container
+  belongs_to :template
 end
