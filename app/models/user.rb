@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :containers
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, :registerable,
