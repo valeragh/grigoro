@@ -10,7 +10,12 @@ Rails.application.routes.draw do
 
   ActiveAdmin.routes(self)
 
-  resources :users
+  resources :users 
+  resources :templates do 
+    resources :items, :categories
+  end
+
+  get 'templates/:id/complete' => 'templates#complete', as: :complete
 
   # devise_scope :user do
     # get   'login',          to: 'devise/sessions#new'

@@ -256,7 +256,6 @@ DEPENDENCIES
   bcrypt-ruby (= 3.1.2)
   cancancan (= 1.9.2)
   capistrano!
-  coffee-rails (~> 4.1.0)
   devise
   execjs
   font-awesome-rails (= 4.1.0.0)

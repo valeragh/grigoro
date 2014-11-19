@@ -1,0 +1,19 @@
+%h1 Listing Items
+
+%table
+  %tr
+    %th Description
+    %th
+    %th
+    %th
+
+  - @items.each do |item|
+    %tr
+      %td= item.description
+      %td= link_to 'Show', template_item_path(@template, item)
+      %td= link_to 'Edit', edit_template_item_path(@template, item)
+      %td= link_to 'Destroy', template_item_path(@template, item), :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br= link_to 'Create New Item', new_template_item_path
+
+%br= link_to 'Back to Template', @template

@@ -1,0 +1,11 @@
+= form_tag do
+  - @items.each do |item|
+    %p= item.description
+    - @categories.each do |category|
+      = category.name
+      = radio_button_tag "#{item.id}[#{category.id}]", 'yes', @item_category_values[item.id][category.id] == true, disabled: false
+      = label_tag "#{item.id}[#{category.id}]", 'yes'
+      = radio_button_tag "#{item.id}[#{category.id}]", 'no', @item_category_values[item.id][category.id] == false, disabled: false
+      = label_tag "#{item.id}[#{category.id}]", 'no'
+      %p
+  = submit_tag 'Complete'

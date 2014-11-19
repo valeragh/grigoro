@@ -1,0 +1,7 @@
+%h1= @template.name
+%p= @template.description
+%p= link_to 'Template Items', template_items_url(@template)
+%p= link_to 'Template Categories', template_categories_url(@template)
+%p= link_to 'Completing (Items)', complete_path
+
+= link_to 'Back', templates_path
