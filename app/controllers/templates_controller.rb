@@ -28,7 +28,6 @@ class TemplatesController < ApplicationController
   end
 
   def update
-    puts params.inspect
     @template = Template.find(params[:id])
 
     if @template.update_attributes(template_params)
@@ -43,18 +42,20 @@ class TemplatesController < ApplicationController
     redirect_to templates_url, notice: 'Template deleted'
   end
 
-  def complete
+  def fill
     @template = Template.find(params[:id])
 
     @categories = @template.categories
     @items = @template.items
     @items_count = @items.count
 
-    @item_category_values = {9 => {4 => true, 3 => true}, 
-                            10 => {4 => false, 3 => nil},
-                            11 => {4 => false, 3 => true}}
+    @item_category_values = ItemCategoryValue.all_as_hash
 
-    render action: 'complete'  
+    render action: 'fill'  
+  end
+
+  def complete
+
   end
 
   private
