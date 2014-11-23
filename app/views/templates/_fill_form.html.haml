@@ -1,13 +1,26 @@
-= form_tag do
-  - @items.each do |item|
-    %p= item.description
-    - @categories.each do |category|
-      = category.name
-      = radio_button_tag "#{item.id}[#{category.id}]", 'yes', @item_category_values[item.id][category.id] == true, disabled: false
-      = label_tag "#{item.id}[#{category.id}]", 'yes'
-      = radio_button_tag "#{item.id}[#{category.id}]", 'no', @item_category_values[item.id][category.id] == false, disabled: false
-      = label_tag "#{item.id}[#{category.id}]", 'no'
-      %p
-  = submit_tag 'Complete'
+/ = form_tag do
+/   - @items.each do |item|
+/     %p= item.description
+/     - @categories.each do |category|
+/       = category.name
+/       = radio_button_tag "Item:#{item.id}[Category:#{category.id}]", 'yes', @item_category_values[item.id][category.id] == true, disabled: false
+/       = label_tag "#{item.id}[#{category.id}]", 'yes'
+/       = radio_button_tag "Item:#{item.id}[Category:#{category.id}]", 'no', @item_category_values[item.id][category.id] == false, disabled: false
+/       = label_tag "#{item.id}[#{category.id}]", 'no'
+/       %p
+/   = submit_tag 'Complete'
 
-  / TODO: change to form_for @template > @item, use fields_for, accept_nested_attributes
+= form_for @template, url: { action: 'complete' }, method: :post do |template_form|
+  - for item in @template.items
+    = fields_for item do |item_fields|
+      %br= item_fields.label :description, "#{item.description}"
+      - for category in @template.categories
+        = fields_for category do |category_fields|
+          = category_fields.label :name, "#{category.name}"
+          = category_fields.radio_button :"Item:#{item.id},Category:#{category.id}", 'yes', checked: @item_category_values[item.id][category.id] == true
+          = category_fields.label :yes, 'yes'
+          = category_fields.radio_button :"Item:#{item.id},Category:#{category.id}", 'no', checked: @item_category_values[item.id][category.id] == false
+          = category_fields.label :no, 'no'
+          %p
+      %p
+  = template_form.submit 'Complete'

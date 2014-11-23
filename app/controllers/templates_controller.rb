@@ -45,21 +45,31 @@ class TemplatesController < ApplicationController
   def fill
     @template = Template.find(params[:id])
 
-    @categories = @template.categories
-    @items = @template.items
-    @items_count = @items.count
-
-    @item_category_values = ItemCategoryValue.all_as_hash
+    @item_category_values = ItemCategoryValue.all_for_template_as_hash @template.id
 
     render action: 'fill'  
   end
 
   def complete
-
+    params.inspect
+    redirect_to template_fill_path
   end
 
   private
   def template_params
     params.require(:template).permit(:name, :description)
+  end
+
+  def fill_params
+
+  end
+
+  def hashify_id_string id_string
+    hash = {}
+    id_string.split(',').each do |pair|
+      key, value = pair.split(':')
+      hash[key] = value
+    end
+    hash
   end
 end
