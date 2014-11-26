@@ -43,6 +43,8 @@ class TemplatesController < ApplicationController
   end
 
   def fill
+    # Build all needed ICV for Items
+    # @template.items.each(&:build_item_category_values)
     @template = Template.find(params[:id])
 
     @item_category_values = ItemCategoryValue.all_for_template_as_hash @template.id
