@@ -1,26 +1,45 @@
-/ = form_tag do
-/   - @items.each do |item|
-/     %p= item.description
-/     - @categories.each do |category|
-/       = category.name
-/       = radio_button_tag "Item:#{item.id}[Category:#{category.id}]", 'yes', @item_category_values[item.id][category.id] == true, disabled: false
-/       = label_tag "#{item.id}[#{category.id}]", 'yes'
-/       = radio_button_tag "Item:#{item.id}[Category:#{category.id}]", 'no', @item_category_values[item.id][category.id] == false, disabled: false
-/       = label_tag "#{item.id}[#{category.id}]", 'no'
+/ = form_for @template, url: { action: 'complete' }, method: :post do |template_form|
+/   - @template.items.each do |item|
+/     = template_form.fields_for :items, item do |item_fields|
+/       %br= item_fields.label :description, "#{item.description}"
+/       - item.item_category_values.each do |icv|
+/         = item_fields.fields_for :item_category_values, icv do |icv_fields|
+/           = icv_fields.label :category_name, "#{Category.where(id: icv.category_id).first.name}"
+/           / = icv_fields.radio_button "#{icv.id}", 'yes', checked: icv.value == true
+/           / = icv_fields.label :yes, 'yes'
+/           / = icv_fields.radio_button "#{icv.id}", 'no', checked: icv.value == false
+/           / = icv_fields.label :yes, 'no'
+/           = icv_fields.radio_button :value, true
+/           Yes
+/           / = icv_fields.label :yes, 'yes'
+/           = icv_fields.radio_button :value, false
+/           No
+/           / = icv_fields.label :yes, 'no'
+/           %p
 /       %p
-/   = submit_tag 'Complete'
+/   = template_form.submit 'Complete'
+
 
 = form_for @template, url: { action: 'complete' }, method: :post do |template_form|
-  - @template.items.each do |item|
-    = fields_for item do |item_fields|
-      %br= item_fields.label :description, "#{item.description}"
-      - @template.categories.each do |category|
-        = fields_for category do |category_fields|
-          = category_fields.label :name, "#{category.name}"
-          = category_fields.radio_button :"Item:#{item.id},Category:#{category.id}", 'yes', checked: @item_category_values[item.id][category.id] == true
-          = category_fields.label :yes, 'yes'
-          = category_fields.radio_button :"Item:#{item.id},Category:#{category.id}", 'no', checked: @item_category_values[item.id][category.id] == false
-          = category_fields.label :no, 'no'
-          %p
+  = template_form.fields_for :items do |item_fields|
+    %br= item_fields.label :description, item_fields.object.description
+    = item_fields.fields_for :item_category_values do |icv_fields|
+      = icv_fields.label :category_name, "#{Category.where(id: icv_fields.object.category_id).first.name}"
+      = icv_fields.radio_button :value, true
+      Yes
+      = icv_fields.radio_button :value, false
+      No
       %p
+    %p
   = template_form.submit 'Complete'
+
+/ Parameters: {"utf8"=>"✓", "authenticity_token"=>"GafL/Y78mIGaOKuir9UBa7gUOuEUxuJH682gf9Hykdc=", "template"=>{"items_attributes"=>{"0"=>{"item_category_values_attributes"=>{"0"=>{"value"=>"true", "id"=>"1"}, "1"=>{"value"=>"false", "id"=>"2"}}, "id"=>"9"}, "1"=>{"item_category_values_attributes"=>{"0"=>{"value"=>"true", "id"=>"3"}, "1"=>{"id"=>"4"}}, "id"=>"10"}, "2"=>{"item_category_values_attributes"=>{"0"=>{"id"=>"5"}, "1"=>{"id"=>"6"}}, "id"=>"11"}}}, "commit"=>"Complete", "id"=>"2"}
+
+
+
+
+
+
+
+
+

@@ -43,17 +43,25 @@ class TemplatesController < ApplicationController
   end
 
   def fill
-    # Build all needed ICV for Items
-    # @template.items.each(&:build_item_category_values)
     @template = Template.find(params[:id])
 
-    @item_category_values = ItemCategoryValue.all_for_template_as_hash @template.id
+    # Build all needed item_category_values for items
+    @template.items.each(&:build_item_category_values)
 
     render action: 'fill'  
   end
 
   def complete
     params.inspect
+
+    # @template = Template.find(params[:id])
+
+    # @template.items.each do |item|
+    #   item.item_category_values.each do |icv|
+    #     icv.update_attributes()
+    #   end
+    # end
+
     redirect_to template_fill_path
   end
 
@@ -64,14 +72,5 @@ class TemplatesController < ApplicationController
 
   def fill_params
 
-  end
-
-  def hashify_id_string id_string
-    hash = {}
-    id_string.split(',').each do |pair|
-      key, value = pair.split(':')
-      hash[key] = value
-    end
-    hash
   end
 end
