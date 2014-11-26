@@ -11,10 +11,10 @@
 /   = submit_tag 'Complete'
 
 = form_for @template, url: { action: 'complete' }, method: :post do |template_form|
-  - for item in @template.items
+  - @template.items.each do |item|
     = fields_for item do |item_fields|
       %br= item_fields.label :description, "#{item.description}"
-      - for category in @template.categories
+      - @template.categories.each do |category|
         = fields_for category do |category_fields|
           = category_fields.label :name, "#{category.name}"
           = category_fields.radio_button :"Item:#{item.id},Category:#{category.id}", 'yes', checked: @item_category_values[item.id][category.id] == true
