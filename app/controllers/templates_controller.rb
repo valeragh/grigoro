@@ -15,7 +15,7 @@ class TemplatesController < ApplicationController
 
   def create
     @template = Template.new(template_params)
-
+    
     if @template.save
       redirect_to @template, notice: 'Template was successfully created'
     else
@@ -52,17 +52,13 @@ class TemplatesController < ApplicationController
   end
 
   def complete
-    params.inspect
+    @template = Template.find(params[:id])
 
-    # @template = Template.find(params[:id])
-
-    # @template.items.each do |item|
-    #   item.item_category_values.each do |icv|
-    #     icv.update_attributes()
-    #   end
-    # end
-
-    redirect_to template_fill_path
+    if @template.update_attributes(fill_params)
+      redirect_to @template, notice: 'Template was successfuly filled'
+    else
+      render action 'fill'
+    end
   end
 
   private
@@ -71,6 +67,6 @@ class TemplatesController < ApplicationController
   end
 
   def fill_params
-
+    params.require(:template).permit(items_attributes: [:id, { item_category_values_attributes: [:value, :id] }])
   end
 end
