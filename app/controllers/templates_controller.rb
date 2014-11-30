@@ -1,10 +1,11 @@
 class TemplatesController < ApplicationController
+  before_action :load_template, except: [:index, :new, :create]
+
   def index
     @templates = Template.all
   end
 
   def show
-    @template = Template.find(params[:id])
     @items = @template.items
     @categories = @template.categories
   end
@@ -15,7 +16,7 @@ class TemplatesController < ApplicationController
 
   def create
     @template = Template.new(template_params)
-    
+
     if @template.save
       redirect_to @template, notice: 'Template was successfully created'
     else
@@ -24,12 +25,9 @@ class TemplatesController < ApplicationController
   end
 
   def edit
-    @template = Template.find(params[:id])
   end
 
   def update
-    @template = Template.find(params[:id])
-
     if @template.update_attributes(template_params)
       redirect_to @template, notice: 'Template was successfully updated'
     else
@@ -38,22 +36,14 @@ class TemplatesController < ApplicationController
   end
 
   def destroy
-    @template = Template.find(params[:id]).destroy
+    @template.destroy
     redirect_to templates_url, notice: 'Template deleted'
   end
 
   def fill
-    @template = Template.find(params[:id])
-
-    # Build all needed item_category_values for items
-    @template.items.each(&:build_item_category_values)
-
-    render action: 'fill'  
   end
 
   def complete
-    @template = Template.find(params[:id])
-
     if @template.update_attributes(fill_params)
       redirect_to @template, notice: 'Template was successfuly filled'
     else
@@ -62,8 +52,13 @@ class TemplatesController < ApplicationController
   end
 
   private
+
   def template_params
     params.require(:template).permit(:name, :description)
+  end
+
+  def load_template
+    @template = Template.find(params[:id])
   end
 
   def fill_params
