@@ -16,6 +16,10 @@ class ItemsController < ApplicationController
   def create
     @item = @template.items.new(item_params)
 
+    @template.categories.each do |category|
+      @item.categories << category
+    end
+
     if @item.save
       redirect_to template_items_path, notice: 'Item was successfully created'
     else

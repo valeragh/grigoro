@@ -16,6 +16,10 @@ class CategoriesController < ApplicationController
   def create
     @category = @template.categories.new(category_params)
 
+    @template.items.each do |item|
+      item.categories << @category
+    end
+
     if @category.save
       redirect_to template_categories_path, notice: 'Category was successfully created'
     else
