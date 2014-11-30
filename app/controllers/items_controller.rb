@@ -1,16 +1,16 @@
 class ItemsController < ApplicationController
-  before_action :load_parent
+  before_action :load_template
+  before_action :load_item, only: [:show, :edit, :update, :destroy]
 
   def index
     @items = Item.all
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def new
-    @item = @template.items.new
+    @item = Item.new
   end
 
   def create
@@ -28,12 +28,9 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:id])
-
     if @item.update_attributes(item_params)
       redirect_to template_item_path(@template, @item), notice: 'Item was successfully updated'
     else
@@ -42,7 +39,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item = Item.find(params[:id]).destroy
+    @item.destroy
     redirect_to template_items_path, notice: 'Item deleted'
   end
 
@@ -51,7 +48,11 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:description)
   end
 
-  def load_parent
+  def load_template
     @template = Template.find(params[:template_id])
+  end
+
+  def load_item
+    @item = Item.find(params[:id])
   end
 end

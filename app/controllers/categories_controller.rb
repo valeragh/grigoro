@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @category = @template.categories.new
+    @category = Category.new
   end
 
   def create
