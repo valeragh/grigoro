@@ -62,6 +62,6 @@ class TemplatesController < ApplicationController
   end
 
   def fill_params
-    params.require(:template).permit(items_attributes: [:id, { item_category_values_attributes: [:value, :id] }])
+    params.require(:template).permit(items_attributes: [:id, { values_attributes: [:value, :id] }])
   end
 end

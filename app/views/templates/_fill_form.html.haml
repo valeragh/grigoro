@@ -2,7 +2,7 @@
   = f.fields_for :items do |item|
     %p
       = item.label :description, item.object.description
-      = item.fields_for :item_category_values do |value|
+      = item.fields_for :values do |value|
         %p
           = value.label :category_name, value.object.category.name
           = value.radio_button :value, true

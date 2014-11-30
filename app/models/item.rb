@@ -1,8 +1,8 @@
 class Item < ActiveRecord::Base
   belongs_to :template
 
-  has_many :categories, through: :item_category_values
-  has_many :item_category_values, dependent: :destroy
+  has_many :categories, through: :values
+  has_many :values, dependent: :destroy
 
-  accepts_nested_attributes_for :item_category_values
+  accepts_nested_attributes_for :values
 end
