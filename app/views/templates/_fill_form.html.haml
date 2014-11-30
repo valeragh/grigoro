@@ -1,12 +1,11 @@
 = form_for @template, url: { action: 'complete' }, method: :post do |f|
-  = f.fields_for :items do |item|
+  = f.fields_for :items, @template.items.ordered_asc do |itf|
+    - item = itf.object
     %p
-      = item.label :description, item.object.description
-      = item.fields_for :values do |value|
+      = itf.label :description, item.description
+      = itf.fields_for :values, item.values.ordered do |vf|
+        - val = vf.object
         %p
-          = value.label :category_name, value.object.category.name
-          = value.radio_button :value, true
-          Yes
-          = value.radio_button :value, false
-          No
+          = vf.label nil, val.category.name
+          = vf.check_box :value
   = f.submit 'Complete'
