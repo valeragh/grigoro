@@ -4,9 +4,4 @@ class Item < ActiveRecord::Base
   
   accepts_nested_attributes_for :item_category_values
 
-  def build_item_category_values
-    Category.find_each do |category|
-      ItemCategoryValue.find_or_create_by(item_id: self.id, category_id: category.id)
-    end
-  end
 end
