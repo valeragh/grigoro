@@ -17,6 +17,3 @@
 # Ignore all logfiles and tempfiles
 /log/*.log
 /tmp
-
-# Additional
-/.ruby-version
