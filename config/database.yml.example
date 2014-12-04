@@ -2,6 +2,7 @@ development:
   adapter: postgresql
   encoding: utf8
   database: grigoro_development
+  username: postgres
   pool: 5
   host: localhost # not mandatory
   port: 5432
@@ -13,6 +14,7 @@ test:
   adapter: postgresql
   encoding: utf8
   database: grigoro_test
+  username: postgres
   pool: 5
   host: localhost # not mandatory
   port: 5432
