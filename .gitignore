@@ -18,5 +18,4 @@
 /log/*.log
 /tmp
 
-# Additional
-/.ruby-version
+.DS_Store

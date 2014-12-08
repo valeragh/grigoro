@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+  2.1.2
+before_script:
+  - cp config/database.yml.example config/database.yml
+  - bundle exec rake db:create db:migrate
+notifications:
+  slack: lalightwebdesign:D7n6lxbifJcLSBRCEqTEx0HW
