@@ -1,12 +1,11 @@
-= form_for @template, url: { action: 'complete' }, method: :post do |template_form|
-  = template_form.fields_for :items do |item_fields|
-    %br= item_fields.label :description, item_fields.object.description
-    = item_fields.fields_for :item_category_values do |icv_fields|
-      = icv_fields.label :category_name, "#{Category.where(id: icv_fields.object.category_id).first.name}"
-      = icv_fields.radio_button :value, true
-      Yes
-      = icv_fields.radio_button :value, false
-      No
-      %p
+= form_for @template, url: { action: 'complete' }, method: :post do |f|
+  = f.fields_for :items, @template.items.ordered_asc do |itf|
+    - item = itf.object
     %p
-  = template_form.submit 'Complete'
+      = itf.label :description, item.description
+      = itf.fields_for :values, item.values.ordered do |vf|
+        - val = vf.object
+        %p
+          = vf.label nil, val.category.name
+          = vf.check_box :value
+  = f.submit 'Complete'
