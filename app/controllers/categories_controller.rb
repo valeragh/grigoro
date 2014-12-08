@@ -1,20 +1,24 @@
 class CategoriesController < ApplicationController
-  before_action :load_parent
+  before_action :load_template
+  before_action :load_category, only: [:show, :edit, :update, :destroy]
 
   def index
     @categories = Category.all
   end
 
   def show
-    @category = Category.find(params[:id])
   end
 
   def new
-    @category = @template.categories.new
+    @category = Category.new
   end
 
   def create
     @category = @template.categories.new(category_params)
+
+    @template.items.each do |item|
+      item.categories << @category
+    end
 
     if @category.save
       redirect_to template_categories_path, notice: 'Category was successfully created'
@@ -24,12 +28,9 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = Category.find(params[:id])
   end
 
   def update
-    @category = Category.find(params[:id])
-
     if @category.update_attributes(category_params)
       redirect_to template_category_path(@template, @category), notice: 'Category was successfully updated'
     else
@@ -38,7 +39,7 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Category.find(params[:id]).destroy
+    @category.destroy
     redirect_to template_categories_path, notice: 'Category deleted'
   end
 
@@ -47,7 +48,11 @@ class CategoriesController < ApplicationController
     params.require(:category).permit(:name)
   end
 
-  def load_parent
+  def load_template
     @template = Template.find(params[:template_id])
+  end
+
+  def load_category
+    @category = Category.find(params[:id])
   end
 end
